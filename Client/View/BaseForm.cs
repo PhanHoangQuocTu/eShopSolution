@@ -4,6 +4,7 @@ using Client.Dtos.Product;
 using Client.Dtos.UserDto;
 using DevExpress.XtraBars;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraLayout.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,28 +12,36 @@ using System.Threading.Tasks;
 
 namespace Client.View
 {
-    public partial class AdminForm : DevExpress.XtraBars.Ribbon.RibbonForm
+    public partial class BaseForm : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         public int _pageIndex = 1;
-        public int _pageSize = 50;
+        public int _pageSize = 15;
         public object _dataRow = null;
 
-        public AdminForm()
+        public BaseForm()
         {
             InitializeComponent();
 
-            _= LoadDataGrid();
+            BuildFromByRole(Login._instance._role);
+            _ = LoadDataGrid();
+        }
+
+        private void BuildFromByRole(string role)
+        {
+            switch (role)
+            {
+                case "admin":
+                    break;
+                default:
+                    ribbonPageUsers.Visible = false;
+                    break;
+            }
         }
 
         private void Clear()
         {
-            labTotal.Enabled = false;
-            labCombPageSize.Enabled = false;
-            btnBackPage.Enabled = false;
-            btnNextPage.Enabled = false;
-
             _pageIndex = 1;
-            _pageSize = 50;
+            _pageSize = 15;
             dataGrid.DataSource = null;
             gridView1.Columns.Clear();
             _dataRow = null;
@@ -40,6 +49,8 @@ namespace Client.View
 
         private async Task LoadDataGrid()
         {
+            SetVisiblePaging(true);
+
             if (ribbon.SelectedPage == ribbonPageManagerProducts)
             {
                 var result = await new ProductsService().GetProducts(new GetManageProductPagingRequest()
@@ -62,8 +73,10 @@ namespace Client.View
             if (ribbon.SelectedPage == ribbonPageCategories)
             {
                 var result = await new CategoriesService().GetCategories("vi");
+                SetVisiblePaging(false);
                 dataGrid.DataSource = result;
                 gridView1.Columns[0].Visible = false;
+
             }
 
             if (ribbon.SelectedPage == ribbonPageUsers)
@@ -81,17 +94,30 @@ namespace Client.View
             }
         }
 
+        private void SetVisiblePaging(bool isVisible)
+        {
+            if (!isVisible)
+            {
+                labTotal.Visibility = LayoutVisibility.Never;
+                labCombPageSize.Visibility = LayoutVisibility.Never;
+                layoutControl_btnBackPage.Visibility = LayoutVisibility.Never;
+                layoutControlI_btnNextPage.Visibility = LayoutVisibility.Never;
+            }
+            else
+            {
+                labTotal.Visibility = LayoutVisibility.Always;
+                labCombPageSize.Visibility = LayoutVisibility.Always;
+                layoutControl_btnBackPage.Visibility = LayoutVisibility.Always;
+                layoutControlI_btnNextPage.Visibility = LayoutVisibility.Always;
+            }
+        }
+
         private void SetPaging(int totalRecords, int pageIndex, int pageSize)
         {
-            labTotal.Enabled = true;
-            labCombPageSize.Enabled = true;
-            btnBackPage.Enabled = true;
-            btnNextPage.Enabled = true;
-
             gridView1.Columns[0].Visible = false;
+            combPageSize.Text = pageSize.ToString();
             labTotal.Text = "Tổng số bản ghi: " + totalRecords.ToString();
             labCombPageSize.Text = "Số bản ghi trang " + pageIndex;
-            combPageSize.SelectedItem = pageSize;
         }
 
         private async void ribbon_SelectedPageChanged(object sender, EventArgs e)
@@ -130,6 +156,12 @@ namespace Client.View
                 var result = await new UsersService().DeleteUser((_dataRow as UserVm).Id);
             }
 
+            await LoadDataGrid();
+        }
+
+        private async void combPageSize_SelectedValueChanged(object sender, EventArgs e)
+        {
+            _pageSize = int.Parse(combPageSize.SelectedItem.ToString());
             await LoadDataGrid();
         }
 

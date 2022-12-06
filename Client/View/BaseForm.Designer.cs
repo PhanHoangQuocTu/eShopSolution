@@ -1,6 +1,6 @@
 ﻿namespace Client.View
 {
-    partial class AdminForm
+    partial class BaseForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BaseForm));
             this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.btnAdd = new DevExpress.XtraBars.BarButtonItem();
             this.btnUpdate = new DevExpress.XtraBars.BarButtonItem();
@@ -58,8 +58,8 @@
             this.combPageSize = new DevExpress.XtraEditors.ComboBoxEdit();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControl_btnBackPage = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlI_btnNextPage = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.labTotal = new DevExpress.XtraLayout.SimpleLabelItem();
             this.emptySpaceItem10 = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -81,8 +81,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.combPageSize.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControl_btnBackPage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlI_btnNextPage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.labTotal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem10)).BeginInit();
@@ -292,7 +292,7 @@
             // 
             // btnBackPage
             // 
-            this.btnBackPage.Enabled = false;
+            this.btnBackPage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnBackPage.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnBackPage.ImageOptions.Image")));
             this.btnBackPage.Location = new System.Drawing.Point(1112, 447);
             this.btnBackPage.Name = "btnBackPage";
@@ -303,7 +303,7 @@
             // 
             // btnNextPage
             // 
-            this.btnNextPage.Enabled = false;
+            this.btnNextPage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNextPage.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnNextPage.ImageOptions.Image")));
             this.btnNextPage.Location = new System.Drawing.Point(1154, 447);
             this.btnNextPage.Name = "btnNextPage";
@@ -314,14 +314,22 @@
             // 
             // combPageSize
             // 
+            this.combPageSize.EditValue = "";
             this.combPageSize.Location = new System.Drawing.Point(1031, 461);
             this.combPageSize.MenuManager = this.ribbon;
             this.combPageSize.Name = "combPageSize";
             this.combPageSize.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.combPageSize.Properties.Items.AddRange(new object[] {
+            "15",
+            "25",
+            "50",
+            "100"});
+            this.combPageSize.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             this.combPageSize.Size = new System.Drawing.Size(67, 22);
             this.combPageSize.StyleController = this.layoutControl1;
             this.combPageSize.TabIndex = 7;
+            this.combPageSize.SelectedValueChanged += new System.EventHandler(this.combPageSize_SelectedValueChanged);
             // 
             // Root
             // 
@@ -329,8 +337,8 @@
             this.Root.GroupBordersVisible = false;
             this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1,
-            this.layoutControlItem2,
-            this.layoutControlItem3,
+            this.layoutControl_btnBackPage,
+            this.layoutControlI_btnNextPage,
             this.emptySpaceItem3,
             this.labTotal,
             this.emptySpaceItem10,
@@ -350,23 +358,23 @@
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
-            // layoutControlItem2
+            // layoutControl_btnBackPage
             // 
-            this.layoutControlItem2.Control = this.btnBackPage;
-            this.layoutControlItem2.Location = new System.Drawing.Point(1100, 435);
-            this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(42, 40);
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem2.TextVisible = false;
+            this.layoutControl_btnBackPage.Control = this.btnBackPage;
+            this.layoutControl_btnBackPage.Location = new System.Drawing.Point(1100, 435);
+            this.layoutControl_btnBackPage.Name = "layoutControl_btnBackPage";
+            this.layoutControl_btnBackPage.Size = new System.Drawing.Size(42, 40);
+            this.layoutControl_btnBackPage.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControl_btnBackPage.TextVisible = false;
             // 
-            // layoutControlItem3
+            // layoutControlI_btnNextPage
             // 
-            this.layoutControlItem3.Control = this.btnNextPage;
-            this.layoutControlItem3.Location = new System.Drawing.Point(1142, 435);
-            this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(42, 40);
-            this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem3.TextVisible = false;
+            this.layoutControlI_btnNextPage.Control = this.btnNextPage;
+            this.layoutControlI_btnNextPage.Location = new System.Drawing.Point(1142, 435);
+            this.layoutControlI_btnNextPage.Name = "layoutControlI_btnNextPage";
+            this.layoutControlI_btnNextPage.Size = new System.Drawing.Size(42, 40);
+            this.layoutControlI_btnNextPage.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlI_btnNextPage.TextVisible = false;
             // 
             // emptySpaceItem3
             // 
@@ -380,7 +388,6 @@
             // 
             this.labTotal.AllowHotTrack = false;
             this.labTotal.CustomizationFormText = "Tổng số bản ghi:";
-            this.labTotal.Enabled = false;
             this.labTotal.Location = new System.Drawing.Point(10, 435);
             this.labTotal.Name = "labTotal";
             this.labTotal.Size = new System.Drawing.Size(900, 40);
@@ -398,7 +405,6 @@
             // labCombPageSize
             // 
             this.labCombPageSize.Control = this.combPageSize;
-            this.labCombPageSize.Enabled = false;
             this.labCombPageSize.Location = new System.Drawing.Point(910, 449);
             this.labCombPageSize.Name = "labCombPageSize";
             this.labCombPageSize.Size = new System.Drawing.Size(180, 26);
@@ -453,7 +459,7 @@
             this.emptySpaceItem7.Size = new System.Drawing.Size(68, 14);
             this.emptySpaceItem7.TextSize = new System.Drawing.Size(0, 0);
             // 
-            // AdminForm
+            // BaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -461,11 +467,10 @@
             this.Controls.Add(this.layoutControl1);
             this.Controls.Add(this.ribbonStatusBar);
             this.Controls.Add(this.ribbon);
-            this.Name = "AdminForm";
+            this.Name = "BaseForm";
             this.Ribbon = this.ribbon;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.StatusBar = this.ribbonStatusBar;
-            this.Text = "Admin";
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSearchControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
@@ -477,8 +482,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.combPageSize.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControl_btnBackPage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlI_btnNextPage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.labTotal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem10)).EndInit();
@@ -523,10 +528,10 @@
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonCategoriesGroup2;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonUsersGroup2;
         private DevExpress.XtraEditors.SimpleButton btnBackPage;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControl_btnBackPage;
         private DevExpress.XtraEditors.SimpleButton btnNextPage;
         private DevExpress.XtraEditors.ComboBoxEdit combPageSize;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlI_btnNextPage;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem3;
         private DevExpress.XtraLayout.LayoutControlItem labCombPageSize;
         private DevExpress.XtraLayout.SimpleLabelItem labTotal;

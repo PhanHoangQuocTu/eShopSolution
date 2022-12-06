@@ -25,7 +25,5 @@ namespace Client.Dtos.UserDto
 
         [Display(Name = "Ngày sinh")]
         public DateTime Dob { get; set; }
-
-        public IList<string> Roles { get; set; }
     }
 }
