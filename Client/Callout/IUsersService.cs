@@ -29,7 +29,7 @@ namespace Client.Callout
         public async Task<ApiResult<PagedResult<UserVm>>> GetPagingUsers(GetUserPagingRequest payload)
         {
             var list = new List<string>();
-            string api = "/api/users/paging";
+            string api = "/api/Users/paging";
 
             list.Add("PageIndex=" + payload.PageIndex.ToString());
             list.Add("PageSize=" + payload.PageSize.ToString());

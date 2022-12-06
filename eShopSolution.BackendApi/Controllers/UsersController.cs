@@ -52,6 +52,7 @@ namespace eShopSolution.BackendApi.Controllers
 
         //PUT: http://localhost/api/users/id
         [HttpPut("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Update(Guid id, [FromBody]UserUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -66,6 +67,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
         [HttpPut("{id}/roles")]
+        [AllowAnonymous]
         public async Task<IActionResult> RoleAssign(Guid id, [FromBody]RoleAssignRequest request)
         {
             if (!ModelState.IsValid)
@@ -81,6 +83,7 @@ namespace eShopSolution.BackendApi.Controllers
 
         //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
         [HttpGet("paging")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPaging([FromQuery]GetUserPagingRequest request)
         {
             var products = await _userService.GetUsersPaging(request);
@@ -88,6 +91,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(Guid id)
         {
             var user = await _userService.GetById(id);
@@ -95,6 +99,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _userService.Delete(id);

@@ -1,5 +1,4 @@
-﻿using Client.Dtos;
-using Client.Dtos.Common;
+﻿using Client.Dtos.Common;
 using Client.Dtos.Product;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,6 +9,10 @@ namespace Client.Callout
     public interface IProductsService
     {
         Task<PagedResult<ProductVm>> GetProducts(GetManageProductPagingRequest payload);
+        Task<int> CreateProduct(ProductCreateRequest payload);
+        Task<int> UpdateProduct(int productId, ProductUpdateRequest payload);
+        Task<int> DeleteProduct(int productId);
+        Task<ProductVm> GetProductById(int productId, string languageId);
     }
 
     public class ProductsService : IProductsService
@@ -36,7 +39,14 @@ namespace Client.Callout
                 list.Add("CategoryId=" + payload.CategoryId.ToString());
 
             return await _httpClientService.GetAsync<PagedResult<ProductVm>>(_host + (list.Count > 0 ? api + "?" + string.Join("&", list) : api) , string.Empty);
-        } 
+        }
 
+        public async Task<int> CreateProduct(ProductCreateRequest payload) => await _httpClientService.PostAsync<int, ProductCreateRequest>(_host + "/api/Products", payload, string.Empty);
+        
+        public async Task<int> UpdateProduct(int productId, ProductUpdateRequest payload) => await _httpClientService.PutAsync<int, ProductUpdateRequest>(_host + $"/api/Products/{productId}", payload, string.Empty);
+        
+        public async Task<int> DeleteProduct(int productId) => await _httpClientService.DeleteAsync<int>(_host + $"/api/Products/{productId}", string.Empty);
+        
+        public async Task<ProductVm> GetProductById(int productId, string languageId) => await _httpClientService.GetAsync<ProductVm>(_host + $"/api/Products/{productId}/{languageId}", string.Empty);
     }
 }
