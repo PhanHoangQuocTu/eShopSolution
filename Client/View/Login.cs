@@ -1,16 +1,8 @@
 ﻿using Client.Callout;
 using Client.Dtos.UserDto;
-using Client.Security;
-using DevExpress.XtraEditors;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Client.View
 {
@@ -26,17 +18,18 @@ namespace Client.View
             var a = new UsersService();
             var result = await a.Authenticate(new LoginRequest()
             {
+                //UserName = txtUserNameLogin.Text,
+                //Password = txtPasswordLogin.Text,
                 UserName = "admin",
                 Password = "Abcd1234$",
                 RememberMe = true,
             });
 
-            var bc = Convert.FromBase64String(result.ResultObj);
-            var val = Base64Security.Decode(result.ResultObj);
+            var token = new JwtSecurityTokenHandler().ReadJwtToken(result.ResultObj);
+            var role = token.Claims.FirstOrDefault(claim => claim.Type.Contains("role")).Value;
 
             AdminForm adminForm = new AdminForm();
             adminForm.ShowDialog();
-            this.Hide();
         }
     }
 }

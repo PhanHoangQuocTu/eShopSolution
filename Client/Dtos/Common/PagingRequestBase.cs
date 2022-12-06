@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 
-namespace Client.Dtos
+namespace Client.Dtos.Common
 {
     public class PagingRequestBase
     {

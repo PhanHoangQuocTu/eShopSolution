@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Client.Dtos
+namespace Client.Dtos.Product
 {
     public class ProductVm
     {

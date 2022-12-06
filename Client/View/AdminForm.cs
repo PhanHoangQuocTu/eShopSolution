@@ -1,5 +1,5 @@
 ﻿using Client.Callout;
-using Client.Dtos;
+using Client.Dtos.Product;
 using DevExpress.XtraBars;
 using System;
 

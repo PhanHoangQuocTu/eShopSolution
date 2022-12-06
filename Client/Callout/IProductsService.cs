@@ -1,5 +1,6 @@
 ﻿using Client.Dtos;
 using Client.Dtos.Common;
+using Client.Dtos.Product;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Threading.Tasks;
