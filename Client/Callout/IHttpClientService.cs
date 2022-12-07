@@ -79,8 +79,8 @@ namespace Client.Callout
 
             var message = await response.Content.ReadAsStringAsync();
 
-            if (!response.IsSuccessStatusCode)
-                throw new UnhandledException(message);
+            //if (!response.IsSuccessStatusCode)
+            //    throw new UnhandledException(message);
 
             if (message.IsNullOrEmpty() || JsonConvert.DeserializeObject<T>(message) == null)
                 return default;

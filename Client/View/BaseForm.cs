@@ -165,6 +165,12 @@ namespace Client.View
 
         private async void btnDelete_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (_dataRow == null)
+            {
+                MessageBoxUtil.ShowMessageBox("Thông báo", "Vui lòng chọn 1 bản ghi để xoá..", MessageBoxType.Information);
+                return;
+            }
+
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn xoá không?", "Xác nhận", MessageBoxButtons.YesNo);
 
             if (dialogResult == DialogResult.Yes)
@@ -177,6 +183,11 @@ namespace Client.View
                 if (ribbon.SelectedPage == ribbonPageUsers)
                 {
                     var result = await new UsersService().DeleteUser((_dataRow as UserVm).Id);
+                    if (!result.IsSuccessed)
+                    {
+                        MessageBoxUtil.ShowMessageBox("Error", result.Message, MessageBoxType.Error);
+                        return;
+                    }
                 }
 
                 await LoadDataGrid();

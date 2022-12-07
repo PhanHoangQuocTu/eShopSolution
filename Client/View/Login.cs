@@ -1,5 +1,8 @@
 ﻿using Client.Callout;
+using Client.Dtos.Common;
 using Client.Dtos.UserDto;
+using Client.Enumerates;
+using Client.Utills;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -41,12 +44,24 @@ namespace Client.View
                 RememberMe = cboxRemember.Checked,
             });
 
-            var token = new JwtSecurityTokenHandler().ReadJwtToken(result.ResultObj);
-            _role = token.Claims.FirstOrDefault(claim => claim.Type.Contains("role")).Value;
+            AfterLogin(result);
+        }
 
-            BaseForm baseForm = new BaseForm();
-            baseForm.Show();
-            this.Hide();
+        private void AfterLogin(ApiResult<string> result)
+        {
+            if (result.IsSuccessed)
+            {
+                var token = new JwtSecurityTokenHandler().ReadJwtToken(result.ResultObj);
+                _role = token.Claims.FirstOrDefault(claim => claim.Type.Contains("role")).Value;
+
+                BaseForm baseForm = new BaseForm();
+                baseForm.Show();
+            }
+            else
+            {
+                MessageBoxUtil.ShowMessageBox("Thông báo", result.Message, MessageBoxType.Information);
+            }    
+            
         }
 
         private void cboxViewPass_CheckedChanged(object sender, EventArgs e)
