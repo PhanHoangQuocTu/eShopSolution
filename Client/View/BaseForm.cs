@@ -1,19 +1,22 @@
 ﻿using Client.Callout;
-using Client.Dtos.Common;
 using Client.Dtos.Product;
 using Client.Dtos.UserDto;
+using Client.Enumerates;
+using Client.Utills;
 using DevExpress.XtraBars;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraLayout.Utils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Client.View
 {
     public partial class BaseForm : DevExpress.XtraBars.Ribbon.RibbonForm
     {
+        public static BaseForm _instanceBaseForm;
+        public StateEnum _state = StateEnum.NONE;
+
         public int _pageIndex = 1;
         public int _pageSize = 15;
         public object _dataRow = null;
@@ -21,6 +24,7 @@ namespace Client.View
         public BaseForm()
         {
             InitializeComponent();
+            _instanceBaseForm = this;
 
             BuildFromByRole(Login._instance._role);
             _ = LoadDataGrid();
@@ -128,35 +132,55 @@ namespace Client.View
 
         private void gridView1_SelectionChanged(object sender, DevExpress.Data.SelectionChangedEventArgs e) => _dataRow = (sender as GridView).FocusedRowObject;
 
-        private async void btnAdd_ItemClick(object sender, ItemClickEventArgs e)
+        private void btnAdd_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var a = new ProductsService();
-            var result = await a.GetProducts(new GetManageProductPagingRequest()
-            {
-                PageIndex = 1,
-                PageSize = 50,
-                Keyword = String.Empty,
-            });
+            _state = StateEnum.INSERT;
+            InitFromInsertOrUpdate();
         }
 
         private void btnUpdate_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            _state = StateEnum.UPDATE;
+            InitFromInsertOrUpdate();
         }
 
-        private async void btnDelete_ItemClick(object sender, ItemClickEventArgs e)
+        private void InitFromInsertOrUpdate()
         {
+            if (_state == StateEnum.NONE || _dataRow == null)
+            {
+                MessageBoxUtil.ShowMessageBox("Lỗi", "Hệ thống tạm thời gián đoạn, vui lòng thử lại sau.", MessageBoxType.Error);
+                return;
+            }
+
             if (ribbon.SelectedPage == ribbonPageManagerProducts)
             {
-                var result = await new ProductsService().DeleteProduct((_dataRow as ProductVm).Id);
             }
 
             if (ribbon.SelectedPage == ribbonPageUsers)
             {
-                var result = await new UsersService().DeleteUser((_dataRow as UserVm).Id);
+                UserFrom userFrom = new UserFrom();
+                userFrom.ShowDialog();
             }
+        }
 
-            await LoadDataGrid();
+        private async void btnDelete_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn xoá không?", "Xác nhận", MessageBoxButtons.YesNo);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                if (ribbon.SelectedPage == ribbonPageManagerProducts)
+                {
+                    var result = await new ProductsService().DeleteProduct((_dataRow as ProductVm).Id);
+                }
+
+                if (ribbon.SelectedPage == ribbonPageUsers)
+                {
+                    var result = await new UsersService().DeleteUser((_dataRow as UserVm).Id);
+                }
+
+                await LoadDataGrid();
+            }
         }
 
         private async void combPageSize_SelectedValueChanged(object sender, EventArgs e)

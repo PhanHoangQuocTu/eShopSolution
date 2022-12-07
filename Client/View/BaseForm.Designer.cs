@@ -314,7 +314,7 @@
             // 
             // combPageSize
             // 
-            this.combPageSize.EditValue = "";
+            this.combPageSize.EditValue = "15";
             this.combPageSize.Location = new System.Drawing.Point(1031, 461);
             this.combPageSize.MenuManager = this.ribbon;
             this.combPageSize.Name = "combPageSize";

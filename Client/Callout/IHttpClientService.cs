@@ -3,6 +3,7 @@ using Client.Extensions;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Client.Callout
@@ -88,6 +89,7 @@ namespace Client.Callout
 
             return result != null ? result : default;
         }
+
         private static HttpRequestMessage InitFormUrlendcoded(string endPoint, HttpMethod method, string token)
         {
             var request = InitRequest(endPoint, method, token);
@@ -122,7 +124,6 @@ namespace Client.Callout
 
         private static HttpRequestMessage MakeRequestWithPayload<R>(string endPoint, R payload, HttpMethod method, string token)
         {
-
             var request = InitJsonRequest(endPoint, method, token);
             request.Content = new StringContent(payload != null ? JsonConvert.SerializeObject(payload) : "", System.Text.Encoding.UTF8, "application/json");
             return request;

@@ -12,10 +12,9 @@ namespace Client.Dtos.UserDto
         public string LastName { get; set; }
 
         [Display(Name = "Ngày sinh")]
-        [DataType(DataType.Date)]
-        public DateTime Dob { get; set; }
+        public string Dob { get; set; }
 
-        [Display(Name = "Hòm thư")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Display(Name = "Số điện thoại")]
