@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
+﻿
 
-namespace Client.Dtos.Product
+namespace eShopSolution.Data.Dtos.Product
 {
     public class ProductCreateRequest
     {
-        public string Code { set; get; }
-        public string Name { set; get; }
+        public string? Code { set; get; }
+        public string? Name { set; get; }
         public decimal? ImportPrice { set; get; }
         public decimal? Price { set; get; }
         public int? QuantityInStock { set; get; }

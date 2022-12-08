@@ -160,18 +160,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callout\ICategoriesService.cs" />
     <Compile Include="Callout\IHttpClientService.cs" />
-    <Compile Include="Callout\ILanguagesService.cs" />
     <Compile Include="Callout\IProductsService.cs" />
     <Compile Include="Callout\IUsersService.cs" />
-    <Compile Include="Dtos\Category\CategoryVm.cs" />
     <Compile Include="Dtos\Common\ApiResult.cs" />
     <Compile Include="Dtos\Common\SelectItem.cs" />
     <Compile Include="Dtos\Product\GetManageProductPagingRequest.cs" />
     <Compile Include="Dtos\Common\PagedResult.cs" />
     <Compile Include="Dtos\Common\PagedResultBase.cs" />
-    <Compile Include="Dtos\Languages\LanguageVm.cs" />
     <Compile Include="Dtos\Common\PagingRequestBase.cs" />
     <Compile Include="Dtos\Product\ProductCreateRequest.cs" />
     <Compile Include="Dtos\Product\ProductUpdateRequest.cs" />
@@ -200,12 +196,6 @@
     </Compile>
     <Compile Include="View\BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="View\CategoryForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="View\CategoryForm.Designer.cs">
-      <DependentUpon>CategoryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Login.cs">
       <SubType>Form</SubType>
@@ -240,9 +230,6 @@
     </Compile>
     <EmbeddedResource Include="View\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="View\CategoryForm.resx">
-      <DependentUpon>CategoryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>

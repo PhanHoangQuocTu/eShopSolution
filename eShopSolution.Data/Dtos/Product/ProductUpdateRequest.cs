@@ -1,18 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Client.Dtos.Product
+namespace eShopSolution.Data.Dtos.Product
 {
-    public class ProductCreateRequest
+    public class ProductUpdateRequest
     {
-        public string Code { set; get; }
-        public string Name { set; get; }
+        public string? Id { set; get; }
+        public string? Name { set; get; }
         public decimal? ImportPrice { set; get; }
         public decimal? Price { set; get; }
         public int? QuantityInStock { set; get; }
-        public ProductCreateRequest()
+        public ProductUpdateRequest()
         {
-            Code = string.Empty;
             Name = string.Empty;
             ImportPrice = null;
             Price = null;

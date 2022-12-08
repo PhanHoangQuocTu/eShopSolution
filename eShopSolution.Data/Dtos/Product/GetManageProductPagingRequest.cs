@@ -1,6 +1,7 @@
-﻿using Client.Dtos.Common;
+﻿using eShopSolution.Data.Dtos.Common;
 
-namespace Client.Dtos.Product
+
+namespace eShopSolution.Data.Dtos.Product
 {
     public class GetManageProductPagingRequest : PagingRequestBase
     {

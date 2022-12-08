@@ -1,4 +1,5 @@
 ﻿using Client.Callout;
+using Client.Dtos.Common;
 using Client.Dtos.Product;
 using Client.Dtos.UserDto;
 using Client.Enumerates;
@@ -8,6 +9,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraLayout.Utils;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -64,23 +66,8 @@ namespace Client.View
                     PageSize = _pageSize,
                     Keyword = keyword,
                 });
-
-                dataGrid.DataSource = result.Items;
-                _dataRow = result.Items.Count > 0 ? result.Items[0] : null;
-                SetPaging(result.TotalRecords, result.PageIndex, result.PageSize);
-            }
-
-            if (ribbon.SelectedPage == ribbonPageCarts)
-            {
-
-            }
-
-            if (ribbon.SelectedPage == ribbonPageCategories)
-            {
-                var result = await new CategoriesService().GetCategories("vi");
-                SetVisiblePaging(false);
-                dataGrid.DataSource = result;
-                gridView1.Columns[0].Visible = false;
+                
+                SetPaging<ProductVm>(result);
             }
 
             if (ribbon.SelectedPage == ribbonPageUsers)
@@ -92,9 +79,8 @@ namespace Client.View
                     Keyword = keyword,
                 });
 
-                dataGrid.DataSource = result.ResultObj.Items;
-                _dataRow = result.ResultObj.Items.Count > 0 ? result.ResultObj.Items[0] : null;
-                SetPaging(result.ResultObj.TotalRecords, result.ResultObj.PageIndex, result.ResultObj.PageSize);
+      
+                SetPaging<UserVm>(result);
             }
         }
 
@@ -116,12 +102,19 @@ namespace Client.View
             }
         }
 
-        private void SetPaging(int totalRecords, int pageIndex, int pageSize)
+        private void SetPaging<T>(ApiResult<PagedResult<T>> result)
         {
+            dataGrid.DataSource = result.ResultObj.Items;
+
+            if (result.ResultObj.Items.Count > 0)
+                _dataRow = result.ResultObj.Items.FirstOrDefault();
+            else
+                _dataRow = null;
+
             gridView1.Columns[0].Visible = false;
-            combPageSize.Text = pageSize.ToString();
-            labTotal.Text = "Tổng số bản ghi: " + totalRecords.ToString();
-            labCombPageSize.Text = "Số bản ghi trang " + pageIndex;
+            combPageSize.Text = result.ResultObj.PageSize.ToString();
+            labTotal.Text = "Tổng số bản ghi: " + result.ResultObj.PageCount.ToString();
+            labCombPageSize.Text = "Số bản ghi trang " + result.ResultObj.TotalRecords;
         }
 
         private async void ribbon_SelectedPageChanged(object sender, EventArgs e)
@@ -156,16 +149,6 @@ namespace Client.View
             {
                 ProductFrom productFrom = new ProductFrom();
                 productFrom.ShowDialog();
-            }
-
-            if (ribbon.SelectedPage == ribbonPageCarts)
-            {
-            }
-
-            if (ribbon.SelectedPage == ribbonPageCategories)
-            {
-                CategoryForm categoryForm = new CategoryForm();
-                categoryForm.ShowDialog();
             }
 
             if (ribbon.SelectedPage == ribbonPageUsers)
@@ -231,8 +214,7 @@ namespace Client.View
         {
             var _keyword = txtboxSearch.EditValue != null ? txtboxSearch.EditValue.ToString(): String.Empty;
 
-            if (!_keyword.IsNullOrEmpty())
-                await LoadDataGrid(_keyword);
+            await LoadDataGrid(_keyword);
         }
     }
 }
