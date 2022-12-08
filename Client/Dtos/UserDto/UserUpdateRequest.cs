@@ -16,7 +16,7 @@ namespace Client.Dtos.UserDto
 
         [Display(Name = "Ngày sinh")]
         [DataType(DataType.Date)]
-        public string Dob { get; set; }
+        public DateTime Dob { get; set; }
 
         [Display(Name = "Hòm thư")]
         public string Email { get; set; }

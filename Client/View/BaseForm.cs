@@ -2,6 +2,7 @@
 using Client.Dtos.Product;
 using Client.Dtos.UserDto;
 using Client.Enumerates;
+using Client.Extensions;
 using Client.Utills;
 using DevExpress.XtraBars;
 using DevExpress.XtraGrid.Views.Grid;
@@ -16,10 +17,10 @@ namespace Client.View
     {
         public static BaseForm _instanceBaseForm;
         public StateEnum _state = StateEnum.NONE;
-
-        public int _pageIndex = 1;
-        public int _pageSize = 15;
         public object _dataRow = null;
+
+        private int _pageIndex = 1;
+        private int _pageSize = 15;
 
         public BaseForm()
         {
@@ -51,7 +52,7 @@ namespace Client.View
             _dataRow = null;
         }
 
-        private async Task LoadDataGrid()
+        public async Task LoadDataGrid(string keyword = null)
         {
             SetVisiblePaging(true);
 
@@ -61,7 +62,7 @@ namespace Client.View
                 {
                     PageIndex = _pageIndex,
                     PageSize = _pageSize,
-                    Keyword = String.Empty,
+                    Keyword = keyword,
                 });
 
                 dataGrid.DataSource = result.Items;
@@ -80,7 +81,6 @@ namespace Client.View
                 SetVisiblePaging(false);
                 dataGrid.DataSource = result;
                 gridView1.Columns[0].Visible = false;
-
             }
 
             if (ribbon.SelectedPage == ribbonPageUsers)
@@ -89,7 +89,7 @@ namespace Client.View
                 {
                     PageIndex = _pageIndex,
                     PageSize = _pageSize,
-                    Keyword = String.Empty,
+                    Keyword = keyword,
                 });
 
                 dataGrid.DataSource = result.ResultObj.Items;
@@ -146,7 +146,7 @@ namespace Client.View
 
         private void InitFromInsertOrUpdate()
         {
-            if (_state == StateEnum.NONE || _dataRow == null)
+            if (_state == StateEnum.NONE || (_state == StateEnum.UPDATE && _dataRow == null))
             {
                 MessageBoxUtil.ShowMessageBox("Lỗi", "Hệ thống tạm thời gián đoạn, vui lòng thử lại sau.", MessageBoxType.Error);
                 return;
@@ -154,6 +154,18 @@ namespace Client.View
 
             if (ribbon.SelectedPage == ribbonPageManagerProducts)
             {
+                ProductFrom productFrom = new ProductFrom();
+                productFrom.ShowDialog();
+            }
+
+            if (ribbon.SelectedPage == ribbonPageCarts)
+            {
+            }
+
+            if (ribbon.SelectedPage == ribbonPageCategories)
+            {
+                CategoryForm categoryForm = new CategoryForm();
+                categoryForm.ShowDialog();
             }
 
             if (ribbon.SelectedPage == ribbonPageUsers)
@@ -213,6 +225,14 @@ namespace Client.View
                 _pageIndex--;
                 await LoadDataGrid();
             }    
+        }
+
+        private async void btnSearch_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var _keyword = txtboxSearch.EditValue != null ? txtboxSearch.EditValue.ToString(): String.Empty;
+
+            if (!_keyword.IsNullOrEmpty())
+                await LoadDataGrid(_keyword);
         }
     }
 }

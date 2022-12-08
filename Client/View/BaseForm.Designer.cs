@@ -33,8 +33,9 @@
             this.btnAdd = new DevExpress.XtraBars.BarButtonItem();
             this.btnUpdate = new DevExpress.XtraBars.BarButtonItem();
             this.btnDelete = new DevExpress.XtraBars.BarButtonItem();
-            this.barSearch = new DevExpress.XtraBars.BarEditItem();
             this.repositoryItemSearchControl1 = new DevExpress.XtraEditors.Repository.RepositoryItemSearchControl();
+            this.repositoryItemHypertextLabel1 = new DevExpress.XtraEditors.Repository.RepositoryItemHypertextLabel();
+            this.btnSearch = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPageManagerProducts = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonManagerProductGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonManagerProductGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -70,8 +71,11 @@
             this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.emptySpaceItem7 = new DevExpress.XtraLayout.EmptySpaceItem();
+            this.txtboxSearch = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemTextEdit3 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSearchControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHypertextLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
@@ -93,6 +97,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit3)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbon
@@ -104,9 +109,10 @@
             this.btnAdd,
             this.btnUpdate,
             this.btnDelete,
-            this.barSearch});
+            this.btnSearch,
+            this.txtboxSearch});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
-            this.ribbon.MaxItemId = 8;
+            this.ribbon.MaxItemId = 12;
             this.ribbon.Name = "ribbon";
             this.ribbon.OptionsMenuMinWidth = 300;
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -117,7 +123,9 @@
             this.ribbon.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemTextEdit1,
             this.repositoryItemTextEdit2,
-            this.repositoryItemSearchControl1});
+            this.repositoryItemSearchControl1,
+            this.repositoryItemHypertextLabel1,
+            this.repositoryItemTextEdit3});
             this.ribbon.Size = new System.Drawing.Size(1214, 193);
             this.ribbon.StatusBar = this.ribbonStatusBar;
             this.ribbon.SelectedPageChanged += new System.EventHandler(this.ribbon_SelectedPageChanged);
@@ -146,13 +154,6 @@
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDelete_ItemClick);
             // 
-            // barSearch
-            // 
-            this.barSearch.Caption = "Tìm kiếm";
-            this.barSearch.Edit = this.repositoryItemSearchControl1;
-            this.barSearch.Id = 7;
-            this.barSearch.Name = "barSearch";
-            // 
             // repositoryItemSearchControl1
             // 
             this.repositoryItemSearchControl1.AutoHeight = false;
@@ -160,6 +161,18 @@
             new DevExpress.XtraEditors.Repository.ClearButton(),
             new DevExpress.XtraEditors.Repository.SearchButton()});
             this.repositoryItemSearchControl1.Name = "repositoryItemSearchControl1";
+            // 
+            // repositoryItemHypertextLabel1
+            // 
+            this.repositoryItemHypertextLabel1.Name = "repositoryItemHypertextLabel1";
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Caption = "Tìm kiếm";
+            this.btnSearch.Id = 10;
+            this.btnSearch.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.ImageOptions.Image")));
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSearch_ItemClick);
             // 
             // ribbonPageManagerProducts
             // 
@@ -178,7 +191,8 @@
             // 
             // ribbonManagerProductGroup2
             // 
-            this.ribbonManagerProductGroup2.ItemLinks.Add(this.barSearch, true);
+            this.ribbonManagerProductGroup2.ItemLinks.Add(this.txtboxSearch, true);
+            this.ribbonManagerProductGroup2.ItemLinks.Add(this.btnSearch, true);
             this.ribbonManagerProductGroup2.Name = "ribbonManagerProductGroup2";
             // 
             // ribbonPageCarts
@@ -198,7 +212,8 @@
             // 
             // ribbonCartGroup2
             // 
-            this.ribbonCartGroup2.ItemLinks.Add(this.barSearch, true);
+            this.ribbonCartGroup2.ItemLinks.Add(this.txtboxSearch, true);
+            this.ribbonCartGroup2.ItemLinks.Add(this.btnSearch, true);
             this.ribbonCartGroup2.Name = "ribbonCartGroup2";
             // 
             // ribbonPageCategories
@@ -218,7 +233,8 @@
             // 
             // ribbonCategoriesGroup2
             // 
-            this.ribbonCategoriesGroup2.ItemLinks.Add(this.barSearch, true);
+            this.ribbonCategoriesGroup2.ItemLinks.Add(this.txtboxSearch, true);
+            this.ribbonCategoriesGroup2.ItemLinks.Add(this.btnSearch, true);
             this.ribbonCategoriesGroup2.Name = "ribbonCategoriesGroup2";
             // 
             // ribbonPageUsers
@@ -238,7 +254,8 @@
             // 
             // ribbonUsersGroup2
             // 
-            this.ribbonUsersGroup2.ItemLinks.Add(this.barSearch, true);
+            this.ribbonUsersGroup2.ItemLinks.Add(this.txtboxSearch, true);
+            this.ribbonUsersGroup2.ItemLinks.Add(this.btnSearch, true);
             this.ribbonUsersGroup2.Name = "ribbonUsersGroup2";
             // 
             // repositoryItemTextEdit1
@@ -459,6 +476,18 @@
             this.emptySpaceItem7.Size = new System.Drawing.Size(68, 14);
             this.emptySpaceItem7.TextSize = new System.Drawing.Size(0, 0);
             // 
+            // txtboxSearch
+            // 
+            this.txtboxSearch.Caption = "Nhập dữ liệu tìm kiếm:  ";
+            this.txtboxSearch.Edit = this.repositoryItemTextEdit3;
+            this.txtboxSearch.Id = 11;
+            this.txtboxSearch.Name = "txtboxSearch";
+            // 
+            // repositoryItemTextEdit3
+            // 
+            this.repositoryItemTextEdit3.AutoHeight = false;
+            this.repositoryItemTextEdit3.Name = "repositoryItemTextEdit3";
+            // 
             // BaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -473,6 +502,7 @@
             this.StatusBar = this.ribbonStatusBar;
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSearchControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHypertextLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
@@ -494,6 +524,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -519,7 +550,6 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraLayout.LayoutControlGroup Root;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-        private DevExpress.XtraBars.BarEditItem barSearch;
         private DevExpress.XtraEditors.Repository.RepositoryItemSearchControl repositoryItemSearchControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonManagerProductGroup2;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
@@ -542,5 +572,9 @@
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem7;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem6;
+        private DevExpress.XtraEditors.Repository.RepositoryItemHypertextLabel repositoryItemHypertextLabel1;
+        private DevExpress.XtraBars.BarButtonItem btnSearch;
+        private DevExpress.XtraBars.BarEditItem txtboxSearch;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit3;
     }
 }

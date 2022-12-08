@@ -12,7 +12,7 @@ namespace Client.Dtos.UserDto
         public string LastName { get; set; }
 
         [Display(Name = "Ngày sinh")]
-        public string Dob { get; set; }
+        public DateTime Dob { get; set; }
 
         [Display(Name = "Email")]
         public string Email { get; set; }

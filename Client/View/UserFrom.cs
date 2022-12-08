@@ -2,6 +2,7 @@
 using Client.Dtos.Common;
 using Client.Dtos.UserDto;
 using Client.Enumerates;
+using Client.Extensions;
 using Client.Utills;
 using DevExpress.XtraLayout.Utils;
 using System;
@@ -54,28 +55,15 @@ namespace Client.View
             {
                 MessageBoxUtil.ShowMessageBox("Lỗi", "Hệ thống tạm thời gián đoạn, vui lòng thử lại sau.", MessageBoxType.Error);
             }
-            
         }
 
         private async Task InsertData()
         {
-            //var tl1 = new RegisterRequest()
-            //{
-            //    FirstName = "cường1",
-            //    LastName = "nguyễn1",
-            //    Dob = dateBirthday.DateTime.ToString("yyyy-dd-MM"),
-            //    Email = "cuong1@gmail.com",
-            //    PhoneNumber = "08688898441",
-            //    UserName = "cuongnd1",
-            //    Password = "123456789@Aa",
-            //    ConfirmPassword = "123456789@Aa"
-            //};
-
             var result = await new UsersService().RegisterUser(new RegisterRequest()
             {
                 FirstName = txtFirstName.Text,
                 LastName = txtLastName.Text,
-                Dob = dateBirthday.DateTime.ToString("yyyy-dd-MM"),
+                Dob = dateBirthday.DateTime,
                 Email = txtEmail.Text,
                 PhoneNumber = txtNumberPhone.Text,
                 UserName = txtUserName.Text,
@@ -95,7 +83,7 @@ namespace Client.View
                 Id = user.Id,
                 FirstName = txtFirstName.Text,
                 LastName = txtLastName.Text,
-                Dob = dateBirthday.DateTime.ToString("yyyy-dd-MM"),
+                Dob = dateBirthday.DateTime,
                 Email = txtEmail.Text,
                 PhoneNumber = txtNumberPhone.Text
             });
@@ -103,16 +91,15 @@ namespace Client.View
             AfterCommitAsync(result);
         }
 
-        private void AfterCommitAsync(ApiResult<bool> result)
+        private async void AfterCommitAsync(ApiResult<bool> result)
         {
             if (result.IsSuccessed)
             {
-                //BaseForm baseForm = new BaseForm();
-                //baseForm.Show();
+                await BaseForm._instanceBaseForm.LoadDataGrid();
                 this.Close();
             }
             else
-                MessageBoxUtil.ShowMessageBox("Lỗi", result.Message, MessageBoxType.Error);
+                MessageBoxUtil.ShowMessageBox("Error", !result.Message.IsNullOrEmpty() ? result.Message : "Dữ liệu nhập không đúng. Vui lòng kiểm tra lại.", MessageBoxType.Error);
         }
 
         private void btnCancel_Click(object sender, EventArgs e) => this.Close();

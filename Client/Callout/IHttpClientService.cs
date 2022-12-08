@@ -145,8 +145,8 @@ namespace Client.Callout
 
             var message = await response.Content.ReadAsStringAsync();
 
-            if (!response.IsSuccessStatusCode)
-                throw new UnhandledException(message);
+            //if (!response.IsSuccessStatusCode)
+            //    throw new UnhandledException(message);
 
             if (message.IsNullOrEmpty() || System.Text.Json.JsonSerializer.Deserialize<List<T>>(message) == null)
                 return default;
@@ -162,8 +162,8 @@ namespace Client.Callout
 
             var message = await response.Content.ReadAsStringAsync();
 
-            if (!response.IsSuccessStatusCode)
-                throw new UnhandledException(message);
+            //if (!response.IsSuccessStatusCode)
+            //    throw new UnhandledException(message);
 
             if (message.IsNullOrEmpty())
                 return default;
@@ -188,18 +188,6 @@ namespace Client.Callout
                 request.Headers.TryAddWithoutValidation("Accept", "application/json");
             }
             return request;
-        }
-
-        private async Task<byte[]> SendRequestDownloadFileWithSecretKey(HttpRequestMessage request)
-        {
-            var response = await _clientFactory.SendAsync(request);
-
-            var message = await response.Content.ReadAsStringAsync();
-
-            if (!response.IsSuccessStatusCode)
-                throw new UnhandledException(message);
-
-            return await response.Content.ReadAsByteArrayAsync();
         }
 
         #endregion
