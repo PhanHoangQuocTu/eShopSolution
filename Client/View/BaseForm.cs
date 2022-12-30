@@ -78,7 +78,7 @@ namespace Client.View
                     PageSize = _pageSize,
                     Keyword = keyword,
                 });
-
+                
       
                 SetPaging<UserVm>(result);
             }
